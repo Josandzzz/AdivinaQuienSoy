@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Button } from '../../../../components/Button/Button';
 import { ChoiceGroup } from '../../../../components/ChoiceGroup/ChoiceGroup';
 import { QUESTIONS } from '../../../../data/questions';
-import { GAME_MODES, MIN_TEAMS, ROUND_SIZES } from '../../../game/constants';
+import { GAME_MODES } from '../../../game/constants';
 import { getRoundLength } from '../../../game/utils/buildRound';
+import { loadSetup, ROUND_SIZE_CHOICES, saveSetup } from '../../utils/setupStorage';
 import { TeamNamesFieldset } from '../TeamNamesFieldset/TeamNamesFieldset';
 import styles from './GameSetupForm.module.css';
 
@@ -20,22 +21,21 @@ const MODE_OPTIONS = [
   },
 ];
 
-const SIZE_OPTIONS = [
-  ...ROUND_SIZES.map((size) => ({ value: size, label: String(size) })),
-  { value: QUESTIONS.length, label: `Todas (${QUESTIONS.length})` },
-];
-
-const defaultTeamNames = () =>
-  Array.from({ length: MIN_TEAMS }, (_, i) => `Equipo ${i + 1}`);
+const SIZE_OPTIONS = ROUND_SIZE_CHOICES.map((size) => ({
+  value: size,
+  label: size === QUESTIONS.length ? `Todas (${size})` : String(size),
+}));
 
 /** Limpia los nombres y usa uno por defecto si quedó vacío. */
 const normalizeTeamNames = (names) =>
   names.map((name, i) => name.trim() || `Equipo ${i + 1}`);
 
 export function GameSetupForm({ onStart }) {
-  const [mode, setMode] = useState(GAME_MODES.INDIVIDUAL);
-  const [roundSize, setRoundSize] = useState(ROUND_SIZES[0]);
-  const [teamNames, setTeamNames] = useState(defaultTeamNames);
+  // La configuración de la última partida se usa como punto de partida.
+  const [savedSetup] = useState(loadSetup);
+  const [mode, setMode] = useState(savedSetup.mode);
+  const [roundSize, setRoundSize] = useState(savedSetup.roundSize);
+  const [teamNames, setTeamNames] = useState(savedSetup.teamNames);
 
   const isTeamMode = mode === GAME_MODES.TEAMS;
   const playersCount = isTeamMode ? teamNames.length : 1;
@@ -47,10 +47,13 @@ export function GameSetupForm({ onStart }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const cleanTeamNames = normalizeTeamNames(teamNames);
+    // Los nombres de equipos se recuerdan aunque se juegue en modo individual.
+    saveSetup({ mode, roundSize, teamNames: cleanTeamNames });
     onStart({
       mode,
       roundSize,
-      teamNames: isTeamMode ? normalizeTeamNames(teamNames) : [],
+      teamNames: isTeamMode ? cleanTeamNames : [],
     });
   };
 

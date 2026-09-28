@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import { Button } from '../../../../components/Button/Button';
 import { MAX_TEAMS, MIN_TEAMS } from '../../../game/constants';
+import { TEAM_NAME_MAX_LENGTH } from '../../utils/setupStorage';
 import styles from './TeamNamesFieldset.module.css';
 
 export function TeamNamesFieldset({ teamNames, onChange }) {
@@ -36,7 +37,7 @@ export function TeamNamesFieldset({ teamNames, onChange }) {
                 className={styles.input}
                 type="text"
                 value={name}
-                maxLength={24}
+                maxLength={TEAM_NAME_MAX_LENGTH}
                 placeholder={`Equipo ${index + 1}`}
                 onChange={(event) => updateName(index, event.target.value)}
               />

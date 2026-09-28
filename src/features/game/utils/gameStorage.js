@@ -1,3 +1,4 @@
+import { readJSON, removeItem, writeJSON } from '../../../utils/storage';
 import { SCREENS } from '../constants';
 
 /**
@@ -28,24 +29,15 @@ function isValidGame(state) {
 
 /** Devuelve la partida guardada o `null` si no hay una válida. */
 export function loadGame() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return isValidGame(saved) ? saved : null;
-  } catch {
-    // JSON dañado o almacenamiento bloqueado (modo privado, permisos del navegador).
-    return null;
-  }
+  const saved = readJSON(STORAGE_KEY);
+  return isValidGame(saved) ? saved : null;
 }
 
 /** Guarda la partida si está en juego o en resultados; si no, la elimina. */
 export function saveGame(state) {
-  try {
-    if (SAVED_SCREENS.includes(state.screen)) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } else {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  } catch {
-    // Si no se puede guardar (almacenamiento lleno o bloqueado) el juego sigue funcionando igual.
+  if (SAVED_SCREENS.includes(state.screen)) {
+    writeJSON(STORAGE_KEY, state);
+  } else {
+    removeItem(STORAGE_KEY);
   }
 }
