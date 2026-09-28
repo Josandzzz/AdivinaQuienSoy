@@ -2,7 +2,7 @@
 
 Juego de preguntas en el que, a partir de una pista, hay que adivinar qué personaje bíblico dejó esa huella. Cada pregunta tiene 4 opciones y solo una es correcta.
 
-**Desarrollado por Joseph Moya · ASO JOVENES**
+**Joseph Moya · ASO JOVENES**
 
 ## Modos de juego
 
