@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className={styles.footer}>
       <p>
-        <strong>{BRAND.developer}</strong> · {BRAND.organization}
+        <strong>{BRAND.organization}</strong>
       </p>
       <p>
         <small>© {new Date().getFullYear()}</small>
