@@ -1,10 +1,19 @@
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useEffect, useMemo, useReducer } from 'react';
 import { GAME_MODES } from '../constants';
+import { loadGame, saveGame } from '../utils/gameStorage';
 import { ACTIONS, gameReducer, initialState } from './gameReducer';
+
+/** Retoma la partida guardada, si existe; si no, empieza desde la pantalla de inicio. */
+const getInitialState = () => loadGame() ?? initialState;
 
 /** Expone el estado del juego, valores derivados y acciones. */
 export function useGame() {
-  const [state, dispatch] = useReducer(gameReducer, initialState);
+  const [state, dispatch] = useReducer(gameReducer, undefined, getInitialState);
+
+  // Cada cambio de estado se guarda, así una recarga no borra la partida.
+  useEffect(() => {
+    saveGame(state);
+  }, [state]);
 
   const start = useCallback((config) => dispatch({ type: ACTIONS.START, config }), []);
   const answer = useCallback((option) => dispatch({ type: ACTIONS.ANSWER, option }), []);
