@@ -1,0 +1,19 @@
+.logo {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.badge {
+  fill: var(--color-primary);
+}
+
+.book {
+  fill: var(--color-surface);
+}
+
+.spine {
+  stroke: var(--color-primary);
+  stroke-width: 2.5;
+}

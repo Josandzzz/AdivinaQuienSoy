@@ -1,0 +1,16 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.status {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.exit {
+  align-self: center;
+  font-size: var(--text-sm);
+}

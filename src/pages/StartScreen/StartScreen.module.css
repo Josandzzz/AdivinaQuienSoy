@@ -1,0 +1,24 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--text-2xl);
+  color: var(--color-primary);
+}
+
+.text {
+  max-width: 50ch;
+  margin-inline: auto;
+  color: var(--color-text-muted);
+}

@@ -1,0 +1,10 @@
+.turn {
+  text-align: center;
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.team {
+  font-family: var(--font-heading);
+  color: var(--color-gold);
+}

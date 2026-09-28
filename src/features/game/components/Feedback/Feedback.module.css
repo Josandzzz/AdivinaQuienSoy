@@ -1,0 +1,45 @@
+.feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.message:empty {
+  display: none;
+}
+
+.message {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+}
+
+.success {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.error {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.reference {
+  color: var(--color-text-muted);
+}
+
+.reference cite {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.next {
+  align-self: flex-end;
+}
+
+@media (max-width: 560px) {
+  .next {
+    align-self: stretch;
+  }
+}

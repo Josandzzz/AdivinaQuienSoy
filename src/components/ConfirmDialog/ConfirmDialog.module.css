@@ -1,0 +1,49 @@
+.dialog {
+  width: min(100% - 2 * var(--space-4), 420px);
+  margin: auto; /* el reset global quita el centrado nativo de <dialog> */
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-md);
+}
+
+.dialog[open] {
+  animation: appear 200ms ease;
+}
+
+.dialog::backdrop {
+  background: rgb(20 12 4 / 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.title {
+  font-size: var(--text-xl);
+  color: var(--color-primary);
+}
+
+.message {
+  margin-block: var(--space-3) var(--space-5);
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+@media (max-width: 480px) {
+  .actions > * {
+    flex: 1 1 100%;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
